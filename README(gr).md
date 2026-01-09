@@ -440,14 +440,14 @@ Navigate('Status Screen', ScreenTransition.Fade)
 - Εφάρμοσε formulas και logic στο Power Apps
 - Συνεργάστηκε αποτελεσματικά σε agile περιβάλλον
 
-### 9.3 Προκλήσεις που Αντιμετωπίστηκαν
+### 9.2 Προκλήσεις που Αντιμετωπίστηκαν
 
 1. **SharePoint Person Columns:** Η σύνδεση Person/Group columns με dropdowns ήταν πολύπλοκη
 2. **Button Clickability:** DisplayMode properties προκαλούσαν θέματα
 3. **Data Type Matching:** Choice columns χρειάζονταν `.Value` syntax
 4. **Variable Initialization:** OnStart timing issues
 
-### 9.4 Τελική Αξιολόγηση
+### 9.3 Τελική Αξιολόγηση
 
 Το σύστημα είναι **παραγωγικό και έτοιμο για χρήση** με μικρές βελτιώσεις που μπορούν να προστεθούν στο μέλλον. Καλύπτει όλες τις βασικές απαιτήσεις και παρέχει solid foundation για επέκταση.
 
@@ -455,24 +455,14 @@ Navigate('Status Screen', ScreenTransition.Fade)
 
 ## 10. Παραρτήματα
 
-### 10.1 Glossary
-
-- **Canvas App:** Low-code εφαρμογή με drag-and-drop interface
-- **SharePoint List:** Πίνακας δεδομένων στο SharePoint
-- **Power Automate:** Εργαλείο για workflow automation
-- **Power BI:** Business intelligence και data visualization tool
-- **Patch:** Formula για Create/Update δεδομένων
-- **Filter:** Formula για φιλτράρισμα δεδομένων
-- **LookUp:** Formula για αναζήτηση specific record
-
-### 10.2 Χρήσιμα Links
+### 10.1 Χρήσιμα Links
 
 - Power Apps Documentation: https://docs.microsoft.com/power-apps
 - SharePoint Online: https://docs.microsoft.com/sharepoint
 - Power Automate: https://docs.microsoft.com/power-automate
 - Power BI: https://docs.microsoft.com/power-bi
 
-### 10.3 Επικοινωνία Ομάδας
+### 10.2 Επικοινωνία Ομάδας
 
 **Team Lead:** Viola Sanyan - sanyan.viola2@gmail.com
 
