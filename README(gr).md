@@ -261,10 +261,14 @@ Navigate('Status Screen', ScreenTransition.Fade)
 
 **Flow 1: Ειδοποίηση Δημιουργίας Ticket**
 - Trigger: Όταν δημιουργείται νέο item στο Tickets
-- Action: Αποστολή email στο staff team
+- Action: Αποστολή email στο staff team και τον πελάτη
 
 **Flow 2: Ειδοποίηση Ανάθεσης**
 - Trigger: Όταν το Reply ενημερώνεται
+- Action: Αποστολή email στον πελάτη
+
+**Flow 3: Ειδοποίηση Ανάθεσης**
+- Trigger: Όταν το Status γίνεται Resolved
 - Action: Αποστολή email στον πελάτη
 
 ### 4.5 Power BI Dashboard
