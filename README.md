@@ -264,8 +264,8 @@ Navigate('Status Screen', ScreenTransition.Fade)
 - Action: Αποστολή email στο staff team
 
 **Flow 2: Ειδοποίηση Ανάθεσης**
-- Trigger: Όταν το AssignedTo field ενημερώνεται
-- Action: Αποστολή email στο assigned staff member
+- Trigger: Όταν το Reply ενημερώνεται
+- Action: Αποστολή email στον πελάτη
 
 ### 4.5 Power BI Dashboard
 
@@ -318,22 +318,22 @@ Navigate('Status Screen', ScreenTransition.Fade)
 ### 6.1 Test Scenarios
 
 **Customer Flow:**
-- ✅ Δημιουργία νέου ticket
-- ✅ Προβολή μόνο των δικών του tickets
-- ✅ Επεξεργασία περιγραφής
-- ✅ Αδυναμία επεξεργασίας status/priority
+-  Δημιουργία νέου ticket
+-  Προβολή μόνο των δικών του tickets
+-  Επεξεργασία περιγραφής
+-  Αδυναμία επεξεργασίας status/priority
 
 **Staff Flow:**
-- ✅ Προβολή όλων των tickets
-- ✅ Φιλτράρισμα βάσει status
-- ✅ Ανάθεση tickets
-- ✅ Ενημέρωση status και priority
-- ✅ Προσθήκη replies
+-  Προβολή όλων των tickets
+-  Φιλτράρισμα βάσει status
+-  Ανάθεση tickets
+-  Ενημέρωση status και priority
+-  Προσθήκη replies
 
 **Data Integrity:**
-- ✅ Tickets αποθηκεύονται σωστά στο SharePoint
-- ✅ Auto-generated ID λειτουργεί
-- ✅ Ενημερώσεις αποθηκεύονται άμεσα
+-  Tickets αποθηκεύονται σωστά στο SharePoint
+-  Auto-generated ID λειτουργεί
+-  Ενημερώσεις αποθηκεύονται άμεσα
 
 ### 6.2 Known Issues & Limitations
 
@@ -362,20 +362,7 @@ Navigate('Status Screen', ScreenTransition.Fade)
    - **Λύση:** Προσθήκη Attachment Control στο Update Ticket Screen
    - **Εκτίμηση:** 1-2 ώρες
 
-3. **Power BI Dashboard Integration**
-   - **Πρόβλημα:** Dashboard δεν έχει ενσωματωθεί ακόμα
-   - **Λύση:** Embed Power BI report σε νέα οθόνη ή section
-   - **Εκτίμηση:** 3-4 ώρες
-
 ### 7.2 Μεσαίας Προτεραιότητας
-
-4. **Email Notifications**
-   - Αυτόματες ειδοποιήσεις όταν:
-     - Δημιουργείται νέο ticket
-     - Αλλάζει η κατάσταση ticket
-     - Προστίθεται reply από staff
-   - **Εργαλείο:** Power Automate
-   - **Εκτίμηση:** 2-3 ώρες
 
 5. **Search Functionality**
    - Αναζήτηση tickets με keywords
@@ -398,11 +385,6 @@ Navigate('Status Screen', ScreenTransition.Fade)
    - Rating system μετά το κλείσιμο ticket
    - Analytics για satisfaction scores
    - **Εκτίμηση:** 3-4 ώρες
-
-9. **Mobile App Version**
-   - Βελτιστοποίηση για mobile (Phone layout)
-   - Push notifications
-   - **Εκτίμηση:** 8-10 ώρες
 
 10. **Multi-language Support**
     - Υποστήριξη Ελληνικών και Αγγλικών
@@ -449,18 +431,7 @@ Navigate('Status Screen', ScreenTransition.Fade)
 
 ## 9. Συμπεράσματα
 
-### 9.1 Επιτεύγματα
-
-Η ομάδα υλοποίησε επιτυχώς:
-- ✅ Πλήρως λειτουργικό Canvas App με 4 οθόνες
-- ✅ SharePoint database με 11 test tickets
-- ✅ Role-based access control (Staff vs Customer)
-- ✅ Filtering και search capabilities
-- ✅ CRUD operations (Create, Read, Update)
-- ✅ Professional UI/UX design
-- ✅ Power Automate flows για notifications
-
-### 9.2 Μαθησιακά Αποτελέσματα
+### 9.1 Μαθησιακά Αποτελέσματα
 
 Μέσα από αυτό το project, η ομάδα:
 - Εξοικειώθηκε με το Power Platform ecosystem
