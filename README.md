@@ -56,10 +56,10 @@
 
 | Τεχνολογία | Χρήση | Υλοποίηση |
 |------------|-------|-----------|
-| **Power Apps (Canvas App)** | Frontend Interface | ✅ Ολοκληρωμένο |
-| **SharePoint Online** | Database | ✅ Ολοκληρωμένο |
-| **Power Automate** | Αυτοματισμοί | ✅ Ολοκληρωμένο |
-| **Power BI** | Analytics Dashboard | 🔄 Σε εξέλιξη |
+| **Power Apps (Canvas App)** | Frontend Interface |  Ολοκληρωμένο |
+| **SharePoint Online** | Database |  Ολοκληρωμένο |
+| **Power Automate** | Αυτοματισμοί |  Ολοκληρωμένο |
+| **Power BI** | Analytics Dashboard |  Σε εξέλιξη |
 
 ### 2.2 Δομή Δεδομένων (SharePoint List: "Tickets")
 
