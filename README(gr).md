@@ -54,8 +54,8 @@
 
 ### 2.1 Τεχνολογίες
 
-| Τεχνολογία | Χρήση | Υλοποίηση |
-|------------|-------|-----------|
+| Τεχνολογία | Χρήση |
+|------------|-------|
 | **Power Apps (Canvas App)** | Frontend Interface |
 | **SharePoint Online** | Database |
 | **Power Automate** | Αυτοματισμοί |
@@ -290,12 +290,12 @@ Navigate('Status Screen', ScreenTransition.Fade)
 
 #### 4.5.2 Visualizations που Δημιουργήθηκαν
 
-**1. Total Tickets Card (KPI)**
+**1. Total Tickets Card**
 - **Τύπος:** Card Visual
 - **Μέτρηση:** Count of ID
 - **Σκοπός:** Εμφάνιση συνολικού αριθμού tickets
 
-**2. Open Tickets Card (KPI)**
+**2. Open Tickets Card**
 - **Τύπος:** Card Visual
 - **Measure:** 
   ```dax
@@ -303,7 +303,7 @@ Navigate('Status Screen', ScreenTransition.Fade)
   ```
 - **Σκοπός:** Tickets που χρειάζονται attention (New + In Progress + Resolved)
 
-**3. Closed Tickets Card (KPI)**
+**3. Closed Tickets Card**
 - **Τύπος:** Card Visual
 - **Measure:**
   ```dax
@@ -369,10 +369,10 @@ Navigate('Status Screen', ScreenTransition.Fade)
 Στο **Status Screen**, προστέθηκε button:
 
 **Button Properties:**
-- **Text:** "View Dashboard"
+- **Text:** "Check Analytics"
 - **OnSelect:**
   ```powerfx
-  Launch("https://app.powerbi.com/groups/me/reports/b3d1aa7d-76dd-48eb-a829-e3446994beef")
+  Launch("https://app.powerbi.com/groups/me/reports/b3d1aa7d-76dd-48eb-a829-e3446994beef/9b20755960db78643840?experience=power-bi")
   ```
 - **Visible:** 
   ```powerfx
@@ -381,9 +381,7 @@ Navigate('Status Screen', ScreenTransition.Fade)
   (Μόνο staff members βλέπουν το button)
 
 **Πλεονεκτήματα αυτής της προσέγγισης:**
--  Λειτουργεί 100% χωρίς admin permissions
 -  Ανοίγει το full Power BI interface με όλα τα features
--  Users μπορούν να interact με filters και drill-down
 -  Automatic data refresh από SharePoint
 -  Professional solution που χρησιμοποιείται σε πολλούς οργανισμούς
 
@@ -406,22 +404,6 @@ Navigate('Status Screen', ScreenTransition.Fade)
            ↓
 [Dashboard shows updated analytics]
 ```
-
-#### 4.5.6 Sharing & Access Control
-
-**Published Location:** Power BI Service - My Workspace
-
-**Access Management:**
-- Dashboard shared με teaching team μέσω Power BI sharing
-- Emails added: Professors, group members
-- Permission level: Viewer (can view and interact, cannot edit)
-
-**Security:**
-- Row-level security: Όχι (όλοι οι staff βλέπουν όλα τα tickets)
-- Access control μέσω Power BI permissions
-- Requires Power BI license για viewing
-
----
 
 ## 5. Testing & Quality Assurance
 
@@ -470,8 +452,8 @@ Navigate('Status Screen', ScreenTransition.Fade)
    - **Λύση:** Προσθήκη Attachment Control στο Update Ticket Screen
 
 3. **Power BI Dashboard Integration**
-   - **Πρόβλημα:** Dashboard δεν έχει ενσωματωθεί ακόμα
-   - **Λύση:** Embed Power BI report σε νέα οθόνη ή section
+   - **Πρόβλημα:** Dashboard δεν έχει ενσωματωθεί
+   - **Λύση:** Embed Power BI report σε νέα οθόνη
 
 ### 6.2 Μεσαίας Προτεραιότητας
 4. **Search Functionality**
