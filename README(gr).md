@@ -43,7 +43,7 @@
 
 ### 1.3 Μη Λειτουργικές Απαιτήσεις
 
-- Φιλικό περιβάλλον χρήσης (User-friendly interface)
+- User-friendly interface
 - Γρήγορος χρόνος απόκρισης
 - Ασφάλεια δεδομένων με έλεγχο δικαιωμάτων
 - Responsive design για tablet και desktop
@@ -56,10 +56,10 @@
 
 | Τεχνολογία | Χρήση | Υλοποίηση |
 |------------|-------|-----------|
-| **Power Apps (Canvas App)** | Frontend Interface |  Ολοκληρωμένο |
-| **SharePoint Online** | Database |  Ολοκληρωμένο |
-| **Power Automate** | Αυτοματισμοί |  Ολοκληρωμένο |
-| **Power BI** | Analytics Dashboard |  Σε εξέλιξη |
+| **Power Apps (Canvas App)** | Frontend Interface |
+| **SharePoint Online** | Database |
+| **Power Automate** | Αυτοματισμοί |
+| **Power BI** | Analytics Dashboard |
 
 ### 2.2 Δομή Δεδομένων (SharePoint List: "Tickets")
 
@@ -83,7 +83,7 @@
 
 1. **Home Screen**
    - Κεντρική οθόνη επιλογής ρόλου
-   - Δύο κουμπιά πλοήγησης: "Status of Tickets", "Create a New Ticket"
+   - Τρία κουμπιά πλοήγησης: "Status of Tickets", "Create a New Ticket", "Check Analytics"
 
 2. **Status Screen**
    - 5 κουμπιά φιλτραρίσματος με counters (All, New, In Progress, Closed, Resolved)
@@ -175,7 +175,7 @@
 
 ### 4.1 SharePoint Configuration
 
-**Site:** Ticketing_System_Group5
+**Site:** Ticketing System App
 
 **Lists:**
 1. **Tickets** - Κύρια λίστα με όλα τα tickets
@@ -273,76 +273,181 @@ Navigate('Status Screen', ScreenTransition.Fade)
 
 ### 4.5 Power BI Dashboard
 
-**Σημείωση:** Το Power BI Dashboard βρίσκεται υπό ανάπτυξη από τον Georgios Stylianou.
+#### 4.5.1 Σύνδεση με SharePoint
 
-**Προγραμματισμένα Visualizations:**
-- Σύνολο tickets ανά κατάσταση (pie chart)
-- Tickets ανά προτεραιότητα (bar chart)
-- Tickets ανά κατηγορία (column chart)
-- Μέσος χρόνος επίλυσης (KPI card)
-- Trend line tickets ανά ημέρα
+Το Power BI Dashboard συνδέθηκε απευθείας με το SharePoint list "Tickets" μέσω του SharePoint Online List connector:
 
-**Integration Plan:**
-- Το dashboard θα ενσωματωθεί στο Canvas App μέσω Power BI Embedded
-- Θα είναι ορατό μόνο για staff (varIsStaff = true)
+**Βήματα Σύνδεσης:**
+1. Power BI Desktop → Get Data → SharePoint Online List
+2. SharePoint Site URL: `https://studentscycollegeac.sharepoint.com/sites/Ticketing_System_Group5`
+3. Επιλογή του "Tickets" list
+4. Load data στο Power BI
+
+**Δεδομένα που φορτώθηκαν:**
+- Όλες οι στήλες από το Tickets list
+- Auto-refresh: Κάθε ώρα (όταν published στο Power BI Service)
+- Tickets για testing και visualization
+
+#### 4.5.2 Visualizations που Δημιουργήθηκαν
+
+**1. Total Tickets Card (KPI)**
+- **Τύπος:** Card Visual
+- **Μέτρηση:** Count of ID
+- **Σκοπός:** Εμφάνιση συνολικού αριθμού tickets
+
+**2. Open Tickets Card (KPI)**
+- **Τύπος:** Card Visual
+- **Measure:** 
+  ```dax
+  Open Tickets = CALCULATE(COUNTROWS(Tickets), Tickets[Status] <> "Closed")
+  ```
+- **Σκοπός:** Tickets που χρειάζονται attention (New + In Progress + Resolved)
+
+**3. Closed Tickets Card (KPI)**
+- **Τύπος:** Card Visual
+- **Measure:**
+  ```dax
+  Closed Tickets = CALCULATE(COUNTROWS(Tickets), Tickets[Status] = "Closed")
+  ```
+- **Σκοπός:** Ολοκληρωμένα tickets
+
+**4. Tickets by Status (Pie Chart)**
+- **Τύπος:** Pie Chart
+- **Legend:** Status
+- **Values:** Count of ID
+- **Σκοπός:** Κατανομή tickets ανά κατάσταση
+
+**5. Priority Distribution (Bar Chart)**
+- **Τύπος:** Clustered Bar Chart
+- **Y-axis:** Priority (High, Medium, Low)
+- **X-axis:** Count of ID
+- **Σκοπός:** Visualization προτεραιοτήτων
+
+**6. Category Breakdown (Column Chart)**
+- **Τύπος:** Clustered Column Chart
+- **X-axis:** Category (Account, Technical, Other)
+- **Y-axis:** Count of ID
+- **Σκοπός:** Ανάλυση κατηγοριών προβλημάτων
+- **Insights:** Περισσότερα Technical tickets από Account/Other
+
+**7. Tickets Over Time (Line Chart)**
+- **Τύπος:** Line Chart
+- **X-axis:** Created (Date)
+- **Y-axis:** Count of ID
+- **Σκοπός:** Trend analysis δημιουργίας tickets
+- **Χρησιμότητα:** Εντοπισμός patterns και peak periods
+
+#### 4.5.3 Dashboard Design
+
+**Layout:**
+```
+┌────────────────────────────────────────────────────┐
+│        TICKETING SYSTEM DASHBOARD                  │
+├──────────────┬──────────────┬──────────────────────┤
+│ Total        │ Open         │ Closed               │
+│ Tickets: 4   │ Tickets: 2   │ Tickets: 2           │
+├──────────────┴──────────────┴──────────────────────┤
+│                                                     │
+│  Tickets by Status         Priority Distribution   │
+│  [Pie Chart]               [Bar Chart]             │
+│                                                     │
+├──────────────────────┬─────────────────────────────┤
+│ Category Breakdown   │ Tickets Over Time           │
+│ [Column Chart]       │ [Line Chart]                │
+└──────────────────────┴─────────────────────────────┘
+```
+#### 4.5.4 Integration με Canvas App
+
+**Μέθοδος Ενσωμάτωσης:** Launch Button
+
+Λόγω περιορισμών του organizational account (embed codes disabled), η ενσωμάτωση έγινε με button που ανοίγει το dashboard σε νέο browser tab.
+
+**Υλοποίηση στο Canvas App:**
+
+**1. Launch Button Approach :**
+
+Στο **Status Screen**, προστέθηκε button:
+
+**Button Properties:**
+- **Text:** "View Dashboard"
+- **OnSelect:**
+  ```powerfx
+  Launch("https://app.powerbi.com/groups/me/reports/b3d1aa7d-76dd-48eb-a829-e3446994beef")
+  ```
+- **Visible:** 
+  ```powerfx
+  varIsStaff
+  ```
+  (Μόνο staff members βλέπουν το button)
+
+**Πλεονεκτήματα αυτής της προσέγγισης:**
+-  Λειτουργεί 100% χωρίς admin permissions
+-  Ανοίγει το full Power BI interface με όλα τα features
+-  Users μπορούν να interact με filters και drill-down
+-  Automatic data refresh από SharePoint
+-  Professional solution που χρησιμοποιείται σε πολλούς οργανισμούς
+
+#### 4.5.5 Data Refresh & Updates
+
+**Automatic Refresh:**
+- Power BI Service auto-refreshes data from SharePoint every 1 hour
+- Manual refresh available στο Power BI Service
+- Real-time updates όταν γίνονται αλλαγές στο SharePoint
+
+**Data Flow:**
+```
+[User creates/updates ticket in Canvas App]
+           ↓
+[Patch to SharePoint List]
+           ↓
+[SharePoint stores data]
+           ↓
+[Power BI refreshes (max 1 hour delay)]
+           ↓
+[Dashboard shows updated analytics]
+```
+
+#### 4.5.6 Sharing & Access Control
+
+**Published Location:** Power BI Service - My Workspace
+
+**Access Management:**
+- Dashboard shared με teaching team μέσω Power BI sharing
+- Emails added: Professors, group members
+- Permission level: Viewer (can view and interact, cannot edit)
+
+**Security:**
+- Row-level security: Όχι (όλοι οι staff βλέπουν όλα τα tickets)
+- Access control μέσω Power BI permissions
+- Requires Power BI license για viewing
 
 ---
 
-## 5. Styling & User Experience
+## 5. Testing & Quality Assurance
 
-### 5.1 Χρωματική Παλέτα
-
-- **Primary**: #0078D4 (Microsoft Blue)
-- **Success**: #107C10 (Green - για Resolved)
-- **Warning**: #ED8B00 (Amber - για Medium Priority)
-- **Danger**: #C53030 (Dark Red - για High Priority)
-- **Neutral**: #F8F9FA (Light Gray - backgrounds)
-
-### 5.2 Status Color Coding
-
-| Status | Χρώμα | Σημασία |
-|--------|-------|---------|
-| New | Orange | Νέο ticket, χρειάζεται ανάθεση |
-| In Progress | Blue | Υπό επεξεργασία |
-| Resolved | Green | Επιλύθηκε, περιμένει επιβεβαίωση |
-| Closed | Gray | Ολοκληρώθηκε και κλείσιμο |
-
-### 5.3 Priority Color Coding
-
-| Priority | Χρώμα | Response Time Target |
-|----------|-------|----------------------|
-| High | Dark Red | < 4 ώρες |
-| Medium | Amber | < 24 ώρες |
-| Low | Green | < 48 ώρες |
-
----
-
-## 6. Testing & Quality Assurance
-
-### 6.1 Test Scenarios
+### 5.1 Test Scenarios
 
 **Customer Flow:**
--  Δημιουργία νέου ticket
--  Προβολή μόνο των δικών του tickets
--  Επεξεργασία περιγραφής
--  Αδυναμία επεξεργασίας status/priority
+- Δημιουργία νέου ticket
+- Προβολή μόνο των δικών του tickets
+- Επεξεργασία περιγραφής
+- Αδυναμία επεξεργασίας status/priority
 
 **Staff Flow:**
--  Προβολή όλων των tickets
--  Φιλτράρισμα βάσει status
--  Ανάθεση tickets
--  Ενημέρωση status και priority
--  Προσθήκη replies
+- Προβολή όλων των tickets
+- Φιλτράρισμα βάσει status
+- Ανάθεση tickets
+- Ενημέρωση status και priority
+- Προσθήκη replies
 
 **Data Integrity:**
--  Tickets αποθηκεύονται σωστά στο SharePoint
--  Auto-generated ID λειτουργεί
--  Ενημερώσεις αποθηκεύονται άμεσα
+- Tickets αποθηκεύονται σωστά στο SharePoint
+- Auto-generated ID λειτουργεί
+- Ενημερώσεις αποθηκεύονται άμεσα
 
-### 6.2 Known Issues & Limitations
+### 5.2 Known Issues & Limitations
 
 **Resolved:**
-- ~~Button clickability issues~~ (Fixed: DisplayMode property)
 - ~~Status filter not working~~ (Fixed: Variable initialization)
 - ~~SharePoint column naming~~ (Fixed: Corrected "Category" column name)
 
@@ -352,54 +457,54 @@ Navigate('Status Screen', ScreenTransition.Fade)
 
 ---
 
-## 7. Μελλοντικές Βελτιώσεις
+## 6. Μελλοντικές Βελτιώσεις
 
-### 7.1 Υψηλής Προτεραιότητας
+### 6.1 Υψηλής Προτεραιότητας
 
 1. **Ανάθεση Tickets (AssignedTo Field)**
    - **Πρόβλημα:** Το Person/Group column του SharePoint δεν ενημερώνεται σωστά
    - **Λύση:** Χρήση του Office365Users connector ή μετατροπή σε text field
-   - **Εκτίμηση:** 2-3 ώρες
 
 2. **Attachments Support**
    - **Πρόβλημα:** Attachments δεν εμφανίζονται στο app
    - **Λύση:** Προσθήκη Attachment Control στο Update Ticket Screen
-   - **Εκτίμηση:** 1-2 ώρες
 
-### 7.2 Μεσαίας Προτεραιότητας
+3. **Power BI Dashboard Integration**
+   - **Πρόβλημα:** Dashboard δεν έχει ενσωματωθεί ακόμα
+   - **Λύση:** Embed Power BI report σε νέα οθόνη ή section
 
-5. **Search Functionality**
+### 6.2 Μεσαίας Προτεραιότητας
+4. **Search Functionality**
    - Αναζήτηση tickets με keywords
    - Φίλτρα: Ημερομηνία, κατηγορία, assigned to
-   - **Εκτίμηση:** 2 ώρες
 
-6. **Ticket History/Audit Log**
+5. **Ticket History/Audit Log**
    - Καταγραφή όλων των αλλαγών
    - Ποιος άλλαξε τι και πότε
-   - **Εκτίμηση:** 4-5 ώρες
 
-### 7.3 Χαμηλής Προτεραιότητας
+### 6.3 Χαμηλής Προτεραιότητας
 
 7. **SLA (Service Level Agreement) Tracking**
    - Αυτόματος υπολογισμός response time
    - Προειδοποιήσεις για tickets που πλησιάζουν deadline
-   - **Εκτίμηση:** 5-6 ώρες
 
 8. **Customer Satisfaction Rating**
    - Rating system μετά το κλείσιμο ticket
    - Analytics για satisfaction scores
-   - **Εκτίμηση:** 3-4 ώρες
+
+9. **Mobile App Version**
+   - Βελτιστοποίηση για mobile (Phone layout)
+   - Push notifications
 
 10. **Multi-language Support**
     - Υποστήριξη Ελληνικών και Αγγλικών
     - User preference για γλώσσα
-    - **Εκτίμηση:** 6-8 ώρες
 
 ---
 
-## 8. Deployment & Access
+## 7. Deployment & Access
 
-### 8.1 SharePoint Access
+### 7.1 SharePoint Access
 
 **Site URL:** `https://studentscycollegeac.sharepoint.com/sites/Ticketing_System_Group5`
 
@@ -411,9 +516,9 @@ Navigate('Status Screen', ScreenTransition.Fade)
 - Full access στο SharePoint site
 - View/Edit όλα τα lists
 
-### 8.2 Canvas App Access
+### 7.2 Canvas App Access
 
-**App Name:** TicketingSystem_Group5
+**App Name:** Ticketing System App
 
 **Publishing:**
 - Published version: Latest
@@ -423,19 +528,53 @@ Navigate('Status Screen', ScreenTransition.Fade)
 - **Staff:** sanyan.viola2@gmail.com, 2025ccl88@students.cy.college.ac.cy, 2025ccl25@students.cy.college.ac.cy, 2025ccl118@students.cy.college.ac.cy
 - **Customer:** Οποιοδήποτε student email
 
-### 8.3 Power BI Dashboard Access
+### 7.3 Power BI Dashboard Access
 
-**Workspace:** Ticketing_System_Group5 (όταν ολοκληρωθεί)
+**Dashboard URL:** `https://app.powerbi.com/groups/me/reports/b3d1aa7d-76dd-48eb-a829-e3446994beef/9b20755960db78643840?experience=power-bi`
 
-**Report:** TicketAnalytics
+**Workspace:** My Workspace
 
-**Access:** Shared με καθηγητές
+**Report Name:** Ticketing System Dashboard
+
+**Access Method:** 
+- Μέσω Launch button στο Canvas App (Status Screen)
+- Direct link sharing με authorized users
+- Visible μόνο για staff members (varIsStaff = true)
+
+**Shared With:**
+- Teaching team (professors)
+- Group members: Viola Sanyan, Christos Polias, Loukas Sotiriadis, Georgios Stylianou
+
+**Permissions:**
+- Viewer access για professors
+- Editor access για group members
+
+**Data Source:** 
+- SharePoint List "Tickets"
+- Auto-refresh: Every 1 hour
+- Manual refresh available στο Power BI Service
+
+**Visualizations:**
+- 3 KPI Cards (Total, Open, Closed Tickets)
+- 4 Charts (Status Pie, Priority Bar, Category Column, Time Line)
 
 ---
 
-## 9. Συμπεράσματα
+## 8. Συμπεράσματα
 
-### 9.1 Μαθησιακά Αποτελέσματα
+### 8.1 Επιτεύγματα
+
+Η ομάδα υλοποίησε επιτυχώς:
+-  Πλήρως λειτουργικό Canvas App με 4 οθόνες
+- SharePoint database με test tickets
+- Role-based access control (Staff vs Customer)
+- Filtering και search capabilities
+- CRUD operations (Create, Read, Update)
+- Professional UI/UX design
+- Power Automate flows για notifications
+- Power BI Dashboard με 7 visualizations και real-time data integration
+
+### 8.2 Μαθησιακά Αποτελέσματα
 
 Μέσα από αυτό το project, η ομάδα:
 - Εξοικειώθηκε με το Power Platform ecosystem
@@ -444,29 +583,29 @@ Navigate('Status Screen', ScreenTransition.Fade)
 - Εφάρμοσε formulas και logic στο Power Apps
 - Συνεργάστηκε αποτελεσματικά σε agile περιβάλλον
 
-### 9.2 Προκλήσεις που Αντιμετωπίστηκαν
+### 8.3 Προκλήσεις που Αντιμετωπίστηκαν
 
 1. **SharePoint Person Columns:** Η σύνδεση Person/Group columns με dropdowns ήταν πολύπλοκη
 2. **Button Clickability:** DisplayMode properties προκαλούσαν θέματα
 3. **Data Type Matching:** Choice columns χρειάζονταν `.Value` syntax
 4. **Variable Initialization:** OnStart timing issues
 
-### 9.3 Τελική Αξιολόγηση
+### 8.4 Τελική Αξιολόγηση
 
 Το σύστημα είναι **παραγωγικό και έτοιμο για χρήση** με μικρές βελτιώσεις που μπορούν να προστεθούν στο μέλλον. Καλύπτει όλες τις βασικές απαιτήσεις και παρέχει solid foundation για επέκταση.
 
 ---
 
-## 10. Παραρτήματα
+## 9. Παραρτήματα
 
-### 10.1 Χρήσιμα Links
+### 9.1 Χρήσιμα Links
 
 - Power Apps Documentation: https://docs.microsoft.com/power-apps
 - SharePoint Online: https://docs.microsoft.com/sharepoint
 - Power Automate: https://docs.microsoft.com/power-automate
 - Power BI: https://docs.microsoft.com/power-bi
 
-### 10.2 Επικοινωνία Ομάδας
+### 10. Επικοινωνία Ομάδας
 
 **Team Lead:** Viola Sanyan - sanyan.viola2@gmail.com
 
