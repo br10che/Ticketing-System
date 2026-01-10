@@ -605,7 +605,7 @@ Navigate('Status Screen', ScreenTransition.Fade)
 - Power Automate: https://docs.microsoft.com/power-automate
 - Power BI: https://docs.microsoft.com/power-bi
 
-### 10. Επικοινωνία Ομάδας
+### 9.2 Επικοινωνία Ομάδας
 
 **Team Lead:** Viola Sanyan - sanyan.viola2@gmail.com
 
