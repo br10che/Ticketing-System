@@ -222,7 +222,7 @@ Filter(
 )
 ```
 
-**Save Changes (Update Ticket):**
+**Save Changes (Update Ticket)-Updated with AutoCloseddate:**
 ```powerfx
 Patch(
     tickets,
@@ -232,12 +232,18 @@ Patch(
         Reply: StaffReplyTB.Text,
         Status: {Value: 'Status Dropdown'.Selected.Value},
         Priority: {Value: 'Priority Dropdown'.Selected.Value},
-        Category: {Value: 'Category Dropdown'.Selected.Value}
+        Category: {Value: 'Category Dropdown'.Selected.Value},
+        ClosedDate: If(
+            'Status Dropdown'.Selected.Value = "Closed",
+            Now(),
+            Blank()
+        )
     }
 );
 Notify("Ticket updated successfully!", NotificationType.Success);
 Navigate('Status Screen', ScreenTransition.Fade)
 ```
+**Επεξήγηση:** Η ClosedDate ενημερώνεται αυτόματα στην τρέχουσα ημερομηνία όταν το Status αλλάζει σε "Closed". Σε άλλες περιπτώσεις, παραμένει κενή (Blank).
 
 **Create New Ticket:**
 ```powerfx
