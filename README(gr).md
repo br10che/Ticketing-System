@@ -262,6 +262,29 @@ Patch(
 Notify("Ticket created successfully!", NotificationType.Success);
 Navigate('Status Screen', ScreenTransition.Fade)
 ```
+**New**
+### 4.3.1 UI/UX Improvements
+
+**Status Filter Button Colors:**
+- All Tickets: `RGBA(31, 41, 55, 1)` - Dark gray
+- New Tickets: `RGBA(0, 120, 212, 1)` - Blue
+- In Progress: `RGBA(245, 158, 11, 1)` - Orange
+- Closed: `RGBA(107, 114, 128, 1)` - Gray (neutral, not alarming)
+- Resolved: `RGBA(16, 185, 129, 1)` - Green (success state)
+
+**Form Reset After Ticket Creation:**
+Μετά τη δημιουργία ticket, τα πεδία της φόρμας καθαρίζουν αυτόματα:
+```powerfx
+Reset(TextInputSubject);
+Reset(DescriptionB);
+Reset(DepartmentDD);
+Reset(PriorityDD);
+```
+
+**Refresh Functionality:**
+- Icon: `Icon.Sync`
+- OnSelect: `Refresh(tickets); Notify("Tickets refreshed!", NotificationType.Success)`
+- Επιτρέπει στους χρήστες να ανανεώσουν τη λίστα tickets manually.
 
 ### 4.4 Power Automate Flows
 
@@ -439,6 +462,8 @@ Navigate('Status Screen', ScreenTransition.Fade)
 - ~~Status filter not working~~ (Fixed: Variable initialization)
 - ~~SharePoint column naming~~ (Fixed: Corrected "Category" column name)
 - ~~ClosedDate field not auto-populated~~ (Fixed: Added automatic population in Canvas App Save formula)
+- ~~"Assigned: Unassigned" redundancy~~ (Fixed: Conditional display logic)
+- ~~Status button colors too harsh~~ (Fixed: Professional color palette)
 
 
 **Outstanding:**
@@ -554,13 +579,19 @@ Navigate('Status Screen', ScreenTransition.Fade)
 
 ### 8.1 Επιτεύγματα
 
+### 8.1 Επιτεύγματα
+
 Η ομάδα υλοποίησε επιτυχώς:
--  Πλήρως λειτουργικό Canvas App με 4 οθόνες
+- Πλήρως λειτουργικό Canvas App με 4 οθόνες
 - SharePoint database με test tickets
 - Role-based access control (Staff vs Customer)
 - Filtering και search capabilities
 - CRUD operations (Create, Read, Update)
-- Professional UI/UX design
+- Professional UI/UX design με optimized color palette
+- Form reset functionality για better user experience
+- Manual refresh capability
+- Auto-populated ClosedDate field
+- Conditional confirmation για ticket closure
 - Power Automate flows για notifications
 - Power BI Dashboard με 7 visualizations και real-time data integration
 
