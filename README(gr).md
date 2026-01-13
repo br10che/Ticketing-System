@@ -299,6 +299,10 @@ Reset(PriorityDD);
 **Flow 3: Ειδοποίηση Ανάθεσης**
 - Trigger: Όταν το Status γίνεται Resolved
 - Action: Αποστολή email στον πελάτη
+  
+**Flow 4: Unanswered Ticket Reminder**
+- Trigger: Όταν περάσουν 3 μέρες μετά απο δημιουργεία ticket
+- Action: Αποστολή email στον Assigned Staff Member Loukas.
 
 ### 4.5 Power BI Dashboard
 
