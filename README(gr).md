@@ -438,6 +438,8 @@ Navigate('Status Screen', ScreenTransition.Fade)
 **Resolved:**
 - ~~Status filter not working~~ (Fixed: Variable initialization)
 - ~~SharePoint column naming~~ (Fixed: Corrected "Category" column name)
+- ~~ClosedDate field not auto-populated~~ (Fixed: Added automatic population in Canvas App Save formula)
+
 
 **Outstanding:**
 - AssignedTo field δεν ενημερώνεται (Person column complexity)
